@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: ht1
+  host: 127.0.0.1
+  pool: 5
+  username: dev
+  password: dev.
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: test
+  host: 127.0.0.1
+  pool: 5
+  username: postgres
+  password: newpassword

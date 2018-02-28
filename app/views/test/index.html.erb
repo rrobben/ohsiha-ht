@@ -1,0 +1,10 @@
+<%= form_for @test do |f| %>
+    <%= f.label :name %>:
+    <%= f.text_field :name %><br />
+    <%= f.submit %>
+<% end %>
+
+
+<% @tests.each do |t| %>
+    <%= t.name.to_s %><br />
+<% end %>

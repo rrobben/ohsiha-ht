@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  email: "Email address"
+  username: Username
+  password: Password
+  confirm_password: Confirm password

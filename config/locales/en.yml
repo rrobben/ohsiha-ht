@@ -35,3 +35,8 @@ en:
   username: Username
   password: Password
   confirm_password: Confirm password
+  log_in: Log in
+  new_user: New user
+  delete_are_you_sure: Are you sure you want to delete your profile permanently?
+  delete: Delete
+  logout: Logout

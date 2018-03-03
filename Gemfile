@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'builder'
 gem 'bootstrap'
+gem 'ruby2ruby'
+gem 'ruby_parser'
+gem 'jquery-rails'

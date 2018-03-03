@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
+  root 'fpl#index'
+
+  get '/login', to: 'sessions#new', as: 'login_form'
+  post '/login', to: 'sessions#create', as: 'login'
+  get '/logout', to: 'sessions#destroy', as: 'logout'
+
+  get '/index', to: 'fpl#index', as: 'index'
+  get '/fpl/team/:id', to: 'fpl#team', as: 'fpl_team'
+
   resources :users
   
-  get '/login', to: 'users#login', as: 'login'
+
+
 
   # get 'users/logout'
 

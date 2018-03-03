@@ -1,0 +1,2 @@
+module FplHelper
+end

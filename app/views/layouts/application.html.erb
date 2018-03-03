@@ -3,12 +3,43 @@
   <head>
     <title>Htapp</title>
     <%= csrf_meta_tags %>
+    <script>
+      var ActionJS = {};
+    </script>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body id="<%= controller_name.classify %>" class="<%= action_name %>">
+    <style>
+	  	.main{
+				padding-top: 50px;
+		  }
+		</style>
+    <%#= render(partial: 'navbar') %>
+    <div class="main">
+      <%= yield %>
+    </div>
+
+    <script text='script/javascript'>
+
+    	var runActionJS = function() {
+
+    		controller = document.body.id;
+    		action = document.body.className;
+    		
+    		if (controller && action) {
+    			if(window["ActionJS"][controller] && typeof window["ActionJS"][controller][action] === 'function') {	
+    				window["ActionJS"][controller][action]();
+    				
+    			}
+    		}
+
+    	}
+
+    	$(document).ready(runActionJS);
+    	$(document).on('page:load', runActionJS);
+    </script>
   </body>
 </html>

@@ -47,4 +47,6 @@ en:
   position: Position
   status: Status
   cost: Cost
-  ppg: Points per game
+  ppg: PPM
+  ppgm: PPM / Cost
+  value_season: Value (season)

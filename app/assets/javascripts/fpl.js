@@ -14,21 +14,40 @@ ActionJS.Fpl = {
 
         var url = 'fpl/players'
 
+        // ADA
+        // TODO: Column filtering
+        // TODO: Range Filtering with dialog etc.
+        // TODO: Column hide / show
         jQuery('#players-table').DataTable({
             ajax: {
                 url: url,
                 dataSrc: ''
             },
+            processing: true,
+            stateSave: true,
+            order: [[5, 'desc'], [6, 'desc']],
             columns: [
-                { data: 'name' },
+                {
+                    data: 'name',
+                    searchable: true
+                },
                 { data: 'team' },
                 { data: 'position' },
-                { data: 'status' },
+                { 
+                    data: 'status',
+                    orderable: false },
                 { data: 'cost' },
                 { data: 'points' },
-                { data: 'ppg' }
+                { data: 'value' },
+                { data: 'ppg' },
+                { data: 'ppgm' },
+            ],
+            columnDefs: [
+                {
+                    searchable: false,
+                    targets: "_all"
+                }
             ]
-
         });
     }
 }

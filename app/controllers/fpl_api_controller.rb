@@ -45,20 +45,25 @@ class FplApiController < ApplicationController
       players = []
 
       response.each do |r|
+        status = (r['status'] == 'd' ? "#{r['chance_of_playing_next_round']}%" :  FplApiHelper::STATUSES[r['status']])
+
         p = {
           name: r['web_name'],
           team: FplApiHelper::TEAMS[r['team']],
           position: FplApiHelper::POSITIONS[r['element_type']],
-          status: r['status'],
-          cost: r['now_cost'] / 10.0,
+          status: status,
+          cost: (r['now_cost'] / 10.0).to_s,
           points: r['total_points'],
+          value: r['value_season'],
           ppg: r['points_per_game']
         }
+
+        p[:ppgm] = ((p[:ppg].to_f / p[:cost].to_f).round(1)).to_s
 
         players << p
       end
       
-      players.to_json
+      players
     end
 
 end

@@ -30,4 +30,14 @@ module FplApiHelper
         20 => 'West Ham'
     }
 
+    STATUSES = {
+        's' => '0% - Suspended',
+        'u' => '0% - Unavailable',
+        'i' => '0% - Injured',
+        'n' => '0% - Unavailable',
+        'a' => '100%'
+    }
+
+
+
 end

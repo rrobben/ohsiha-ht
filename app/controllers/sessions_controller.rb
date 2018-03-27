@@ -16,7 +16,6 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_back_or(root_path)
     else
-      #flash[:danger] = "Invalid credentials!"
       render 'new'
     end
   end

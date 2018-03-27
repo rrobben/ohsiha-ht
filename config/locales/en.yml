@@ -40,3 +40,11 @@ en:
   delete_are_you_sure: Are you sure you want to delete your profile permanently?
   delete: Delete
   logout: Logout
+  last_name: Last name
+  points: Points
+  name: Name
+  team: Team
+  position: Position
+  status: Status
+  cost: Cost
+  ppg: Points per game

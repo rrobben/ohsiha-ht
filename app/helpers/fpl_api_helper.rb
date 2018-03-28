@@ -48,4 +48,9 @@ module FplApiHelper
         'a' => '100%'
     }
 
+    CHART_TYPES = {
+        ppg: 'points_per_game',
+        total: 'total_points'
+    }
+
 end

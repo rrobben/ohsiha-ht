@@ -23,14 +23,8 @@ class FplApiController < ApplicationController
 
 
     def chart
-      type = params[:type]
-
-      json = case type
-        when 'total'
-          parse_players_total_chart_data(get_data(FplApiHelper::PLAYERS_URL))
-        else
-          parse_players_ppg_chart_data(get_data(FplApiHelper::PLAYERS_URL))
-      end
+      type = params[:type] || 'ppg'
+      json =  parse_players_chart_data(get_data(FplApiHelper::PLAYERS_URL), FplApiHelper::CHART_TYPES[type.to_sym])
 
       return render(json: json)
     end
@@ -45,37 +39,15 @@ class FplApiController < ApplicationController
     end
 
 
-    def parse_players_total_chart_data(response)
+    def parse_players_chart_data(response, variable)
       players = []
 
       response.each do |r|
-        if r['total_points'].to_i > 0
+        if r[variable].to_f > 0.0
           p = {
             label: r['web_name'],
             data: [{
-              x: r['total_points'].to_i,
-              y: (r['now_cost'] / 10.0).to_f,
-              r: 5
-            }]
-          }
-
-          players << p
-        end
-      end
-      
-      players
-    end
-
-
-    def parse_players_ppg_chart_data(response)
-      players = []
-
-      response.each do |r|
-        if r['points_per_game'].to_f > 0.0
-          p = {
-            label: r['web_name'],
-            data: [{
-              x: r['points_per_game'].to_f,
+              x: r[variable].to_f,
               y: (r['now_cost'] / 10.0).to_f,
               r: 5
             }]

@@ -15,5 +15,6 @@
 //= require jquery3
 //= require bootstrap
 //= require dataTables/jquery.dataTables
+//= require Chart.min
 //= require_tree .
 

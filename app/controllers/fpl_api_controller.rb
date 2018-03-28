@@ -1,47 +1,95 @@
 class FplApiController < ApplicationController
-    
-    def team
-      id = params[:id].to_s
-      url = URI("https://fantasy.premierleague.com/drf/entry/#{id}")
-      response = JSON.parse(Net::HTTP.get(url))
 
-      @result = parse_team_data(response)
-
-      return render(json: @result)
+    def players
+      json = parse_players_table_data(get_data(FplApiHelper::PLAYERS_URL))
+      return render(json: json)
     end
 
 
-    def players
-      url = URI('https://fantasy.premierleague.com/drf/elements/')
-      response = JSON.parse(Net::HTTP.get(url))
+    def team
+      id = params[:id].to_s
+      json = parse_team_data(get_data(FplApiHelper::TEAM_URL.gsub(/__id__/, id)))
 
-      @result = parse_player_data(response)
-
-      return render(json: @result)
+      return render(json: json)
     end
 
 
     def gameweek_history
       id = params[:id].to_s
-      url = URI("https://fantasy.premierleague.com/drf/entry/#{id}/history")
-      response = JSON.parse(Net::HTTP.get(url))
+      json = parse_team_data(get_data(FplApiHelper::GW_HISTORY_URL.gsub(/__id__/, id)))
 
-      @result = parse_team_data(response)
+     return render(json: json)
+    end
 
-      return render(json: @result)
+
+    def chart
+      type = params[:type]
+
+      json = case type
+        when 'total'
+          parse_players_total_chart_data(get_data(FplApiHelper::PLAYERS_URL))
+        else
+          parse_players_ppg_chart_data(get_data(FplApiHelper::PLAYERS_URL))
+      end
+
+      return render(json: json)
     end
 
 
     private
 
 
-    def parse_team_data(response)
-      puts response['entry'].keys
-      response['entry']
+    def get_data(path)
+      url = URI(path)
+      JSON.parse(Net::HTTP.get(url))
     end
 
-    def parse_player_data(response)
-      puts response.first.keys
+
+    def parse_players_total_chart_data(response)
+      players = []
+
+      response.each do |r|
+        if r['total_points'].to_i > 0
+          p = {
+            label: r['web_name'],
+            data: [{
+              x: r['total_points'].to_i,
+              y: (r['now_cost'] / 10.0).to_f,
+              r: 5
+            }]
+          }
+
+          players << p
+        end
+      end
+      
+      players
+    end
+
+
+    def parse_players_ppg_chart_data(response)
+      players = []
+
+      response.each do |r|
+        if r['points_per_game'].to_f > 0.0
+          p = {
+            label: r['web_name'],
+            data: [{
+              x: r['points_per_game'].to_f,
+              y: (r['now_cost'] / 10.0).to_f,
+              r: 5
+            }]
+          }
+
+          players << p
+        end
+      end
+      
+      players
+    end
+
+
+    def parse_players_table_data(response)
       players = []
 
       response.each do |r|
@@ -64,6 +112,11 @@ class FplApiController < ApplicationController
       end
       
       players
+    end
+
+
+    def parse_team_data(response)
+      response['entry']
     end
 
 end

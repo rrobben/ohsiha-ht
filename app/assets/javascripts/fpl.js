@@ -1,17 +1,5 @@
 ActionJS.Fpl = {
     index: function() {
-        //console.log(Routes)
-       /* var url = '/fpl/team/2340282'
-        
-        jQuery.get({
-            url: url,
-            success: function(data, status) {
-                console.log(status);
-                console.log(data)
-                jQuery('#data-holder').html(String(data.id));
-            }
-        });*/
-
         var url = 'fpl/players'
 
         // ADA
@@ -48,6 +36,46 @@ ActionJS.Fpl = {
                     targets: "_all"
                 }
             ]
+        });
+    },
+
+    chart: function() {
+        var url = '/fpl/charts/' + jQuery("#player-chart").data('type');
+        
+        jQuery.get({
+            url: url,
+            success: function(res, status, xhr) {
+                var data = {
+                    datasets: res
+                }
+
+                var options = {
+                    legend: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                //min: 3.5
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                //beginAtZero: true
+                            }
+                        }]
+                    }
+                };
+
+                console.log(data)
+                ActionJS.Fpl._renderChart(jQuery('#player-chart'), data, 'bubble', options);
+            }
+        });
+    },
+
+    _renderChart: function(ctx, data, type, options) {
+        var chart = new Chart(ctx, {
+            type: type,
+            data: data,
+            options: options
         });
     }
 }

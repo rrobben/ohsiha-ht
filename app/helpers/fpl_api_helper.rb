@@ -1,5 +1,15 @@
 module FplApiHelper
 
+    FPL_URL = 'https://fantasy.premierleague.com/drf/'
+    PLAYERS_PATH = 'elements/'
+    TEAM_PATH = 'entry/__id__/'
+    GW_HISTORY_PATH = 'history/'
+
+    PLAYERS_URL = FPL_URL + PLAYERS_PATH
+    TEAM_URL = FPL_URL + TEAM_PATH
+    GW_HISTORY_URL = TEAM_URL + GW_HISTORY_PATH
+
+
     POSITIONS = {
         1 => 'GK',
         2 => 'DEF',
@@ -37,7 +47,5 @@ module FplApiHelper
         'n' => '0% - Unavailable',
         'a' => '100%'
     }
-
-
 
 end

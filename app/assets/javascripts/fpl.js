@@ -13,8 +13,19 @@ ActionJS.Fpl = {
             },
             processing: true,
             stateSave: true,
-            order: [[5, 'desc'], [6, 'desc']],
+            order: [[6, 'desc'], [7, 'desc']],
             columns: [
+                {
+                    data: 'id',
+                    orderable: false,
+                    render: function (data, type) {
+                        if (type == 'display') {
+                            return jQuery('#modal-btn-template').html().replace(/__id__/g, data);
+                        }
+
+                        return null;
+                    }
+                },
                 {
                     data: 'name',
                     searchable: true
@@ -36,6 +47,19 @@ ActionJS.Fpl = {
                     targets: "_all"
                 }
             ]
+        });
+
+        jQuery('#player-modal').on('show.bs.modal', function (event) {
+            var url = jQuery(event.relatedTarget).data('url');     
+            var modal = $(this);       
+
+            jQuery.get({
+                url: url,
+                success: function(data) {
+                    modal.find('.modal-title').text(data.name);
+                    modal.find('.modal-body').text(data.points);
+                }
+            });
         });
     },
 

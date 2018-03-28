@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/fpl/team/:id/history', to: 'fpl_api#gameweek_history', as: 'fpl_team_history'
   get '/fpl/players', to: 'fpl_api#players', as: 'fpl_players'
   get '/fpl/charts/:type', to: 'fpl_api#chart', as: 'fpl_chart'
+  get '/fpl/player/:id', to: 'fpl_api#player', as: 'fpl_player'
 
   resources :users
 

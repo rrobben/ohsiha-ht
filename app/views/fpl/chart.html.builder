@@ -11,7 +11,7 @@ xml.div(class: 'container-fluid') do
 
   xml.div(class: 'row') do
     xml.div(class: 'col-xs-12') do
-      xml.canvas(id: 'player-chart', :'data-type' => @type)
+      xml.canvas(id: 'player-chart', :'data-type' => @type, width: '1200', height: '600')
     end
   end
 end

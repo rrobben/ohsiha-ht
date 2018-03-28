@@ -5,6 +5,8 @@ xml.div(class: 'container-fluid') do
         xml.thead do
           xml.tr do
             xml.th do
+            end
+            xml.th do
               xml << t(:name)
             end
             xml.th do
@@ -35,6 +37,30 @@ xml.div(class: 'container-fluid') do
         end
         xml.tbody do
         end
+      end
+    end
+  end
+end
+
+xml.script(type: 'text/html', id: 'modal-btn-template') do
+  xml.button(type: 'button', class: 'btn btn-primary', :'data-toggle' => 'modal', :'data-target' => '#player-modal', :'data-url' => fpl_player_path(id: '__id__')) do
+    xml << t(:info).downcase
+  end
+end
+
+xml.div(class: 'modal fade', id: 'player-modal', role: 'dialog') do
+  xml.div(class: 'modal-dialog', role:'document') do
+    xml.div(class: 'modal-content') do
+      xml.div(class: 'modal-header') do
+        xml.h5(class: 'modal-title') do
+        end
+        xml.button(type: 'button', class: 'close', :'data-dismiss' => 'modal', :'aria-label' => 'Close') do
+          xml.span(:'aria-hidden' => true) do
+            xml << "&times;"
+          end
+        end
+      end
+      xml.div(class: 'modal-body') do
       end
     end
   end

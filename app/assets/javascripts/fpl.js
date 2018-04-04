@@ -1,14 +1,12 @@
 ActionJS.Fpl = {
     index: function() {
-        var url = 'fpl/players'
-
         // ADA
         // TODO: Column filtering
         // TODO: Range Filtering with dialog etc.
         // TODO: Column hide / show
         jQuery('#players-table').DataTable({
             ajax: {
-                url: url,
+                url: Routes.fpl_players_path(),
                 dataSrc: ''
             },
             processing: true,
@@ -64,7 +62,7 @@ ActionJS.Fpl = {
     },
 
     chart: function() {
-        var url = '/fpl/charts/' + jQuery("#player-chart").data('type');
+        var url = Routes.fpl_chart_path({ type: jQuery("#player-chart").data('type')});
         
         jQuery.get({
             url: url,

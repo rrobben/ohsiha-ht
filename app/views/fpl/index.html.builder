@@ -48,6 +48,12 @@ xml.script(type: 'text/html', id: 'modal-btn-template') do
   end
 end
 
+filter_options = { 2 => FplApiHelper::POSITIONS }
+
+xml.script(:type => 'text/template', :id => 'filters-json') do
+  xml << filter_options.to_json
+end
+
 xml.div(class: 'modal fade', id: 'player-modal', role: 'dialog') do
   xml.div(class: 'modal-dialog', role:'document') do
     xml.div(class: 'modal-content') do

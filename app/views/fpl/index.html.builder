@@ -6,7 +6,7 @@ xml.div(class: 'container-fluid') do
           xml.tr do
             FplHelper::PLAYER_TABLE_COLUMNS.each_with_index do |c, i|
               xml.th(:'data-col' => i) do
-                xml << t(c.to_sym) unless c.blank?
+                xml << t(c.to_sym) if c
               end
             end
           end

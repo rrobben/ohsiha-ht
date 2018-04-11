@@ -1,7 +1,7 @@
 module FplHelper
 
     PLAYER_TABLE_COLUMNS = [
-        '',
+        nil,
         'name',
         'team',
         'position',

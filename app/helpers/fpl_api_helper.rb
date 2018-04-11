@@ -47,7 +47,10 @@ module FplApiHelper
         'u' => '0% - Unavailable',
         'i' => '0% - Injured',
         'n' => '0% - Unavailable',
-        'a' => '100%'
+        'a' => '100%',
+        'd75' => '75%',
+        'd50'=> '50%',
+        'd25' => '25%'
     }
 
     CHART_TYPES = {

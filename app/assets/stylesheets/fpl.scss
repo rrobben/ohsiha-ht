@@ -5,3 +5,72 @@
 th {
     text-align: left
 }
+
+.tether-element.selector {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding-bottom: 0.5rem;
+
+  input.search {
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: none;
+  }
+
+  .values {
+    overflow: auto;
+    max-height: 10rem;
+    min-width: 7rem;
+    padding: 0.2rem 0.5rem;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    margin-bottom: 0.5rem;
+  }
+
+  a.btn {
+    margin-right: 0.5rem;
+  }
+
+  label {
+    display: block;
+    font-weight: normal;
+    white-space: nowrap;
+    margin: 0;
+    overflow: hidden;
+
+    input {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+table.dataTable thead th {
+  outline: none;
+  overflow: visible !important;
+
+  .filters {
+    position: relative;
+    z-index: 1;
+
+    a.toggle {
+      font-weight: normal;
+      opacity: 0.5;
+      white-space: nowrap;
+
+      &.active {
+        font-weight: bold;
+        opacity: 1;
+      }
+      i.icon {
+        font-size: 80%;
+        top: 0;
+      }
+    }
+
+  }
+}

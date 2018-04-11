@@ -61,3 +61,8 @@ gem 'jquery-rails'
 gem 'jquery-datatables-rails', '~> 3.4'
 gem 'chartjs-ror'
 gem 'js-routes'
+
+# Bootstrap popovers and tooltips require tether for positioning
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end

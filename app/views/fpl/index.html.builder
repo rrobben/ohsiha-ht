@@ -4,34 +4,10 @@ xml.div(class: 'container-fluid') do
       xml.table(id: 'players-table') do
         xml.thead do
           xml.tr do
-            xml.th do
-            end
-            xml.th do
-              xml << t(:name)
-            end
-            xml.th do
-              xml << t(:team)
-            end
-            xml.th do
-              xml << t(:position)
-            end
-            xml.th do
-              xml << t(:status)
-            end
-            xml.th do
-              xml << t(:cost)
-            end
-            xml.th do
-              xml << t(:points)
-            end
-            xml.th do
-              xml << t(:value_season)
-            end
-            xml.th do
-              xml << t(:ppg)
-            end
-            xml.th do
-              xml << t(:ppgm)
+            FplHelper::PLAYER_TABLE_COLUMNS.each_with_index do |c, i|
+              xml.th(:'data-col' => i) do
+                xml << t(c.to_sym) unless c.blank?
+              end
             end
           end
         end
@@ -48,7 +24,11 @@ xml.script(type: 'text/html', id: 'modal-btn-template') do
   end
 end
 
-filter_options = { 2 => FplApiHelper::POSITIONS }
+filter_options = { 
+  2 => FplApiHelper::TEAMS.values.uniq,
+  3 => FplApiHelper::POSITIONS.values.uniq,
+  4 => FplApiHelper::STATUSES.values.uniq
+}
 
 xml.script(:type => 'text/template', :id => 'filters-json') do
   xml << filter_options.to_json

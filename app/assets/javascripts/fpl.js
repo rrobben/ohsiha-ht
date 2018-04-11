@@ -73,7 +73,18 @@ ActionJS.Fpl = {
     },
 
     chart: function() {
-        var url = Routes.fpl_chart_path({ type: jQuery("#player-chart").data('type')});
+        var type = jQuery("#player-chart").data('type')
+        var url = Routes.fpl_chart_path({ type: type});
+        
+        var unit = ''
+        
+        switch(type) {
+            case 'ppg':
+                unit = 'PPG';
+                break;
+            default:
+                unit = 'Points';
+        }
         
         jQuery.get({
             url: url,
@@ -87,18 +98,31 @@ ActionJS.Fpl = {
                     scales: {
                         yAxes: [{
                             ticks: {
-                                //min: 3.5
-                            }
+                                callback: function (value, index, values) {
+                                    return '£' + String(value) + 'm';
+                                }
+                            },
                         }],
                         xAxes: [{
                             ticks: {
-                                //beginAtZero: true
+                                callback: function (value, index, values) {
+                                    return String(value) + ' ' + unit;
+                                }
                             }
                         }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            title: function (tips, data) {
+                                return data.datasets[tips[0].datasetIndex].label;
+                            },
+                            label: function (tip, data) {
+                                return tip.xLabel + ' ' + unit + ' (£' + tip.yLabel + 'm)' 
+                            }
+                        }
                     }
                 };
 
-                console.log(data)
                 ActionJS.Fpl._renderChart(jQuery('#player-chart'), data, 'bubble', options);
             }
         });

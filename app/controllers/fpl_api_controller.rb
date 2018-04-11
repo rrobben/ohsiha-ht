@@ -80,7 +80,13 @@ class FplApiController < ApplicationController
               x: r[variable].to_f,
               y: (r['now_cost'] / 10.0).to_f,
               r: 5
-            }]
+            }],
+            backgroundColor: FplApiHelper::TEAM_COLORS[r['team']][:bg],
+            borderColor: FplApiHelper::TEAM_COLORS[r['team']][:border],
+            hoverBackgroundColor: FplApiHelper::TEAM_COLORS[r['team']][:bg],
+            hoverBorderColor: FplApiHelper::TEAM_COLORS[r['team']][:border],
+            borderWidth: 2,
+            hoverBorderWidth: 3
           }
 
           players << p

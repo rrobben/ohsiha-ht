@@ -10,7 +10,7 @@ xml.div(class: 'container-fluid') do
   #end
 
   xml.div(class: 'row') do
-    xml.div(class: 'col-xs-12') do
+    xml.div(class: 'col-xs-12', style: 'background-color: rgb(224, 224, 224);') do
       xml.canvas(id: 'player-chart', :'data-type' => @type, width: '1200', height: '600')
     end
   end

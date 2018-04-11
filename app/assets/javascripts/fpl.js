@@ -112,6 +112,7 @@ ActionJS.Fpl = {
                         }]
                     },
                     tooltips: {
+                        displayColors: false,
                         callbacks: {
                             title: function (tips, data) {
                                 return data.datasets[tips[0].datasetIndex].label;

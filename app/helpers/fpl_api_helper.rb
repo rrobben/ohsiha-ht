@@ -58,4 +58,27 @@ module FplApiHelper
         total: 'total_points'
     }
 
+    TEAM_COLORS = {
+        1 => {bg: '#e03537', border: '#ffffff'},
+        2 => {bg: '#e03537', border: '#373737'},
+        3 => {bg: '#ffffff', border: '#004cc1'},
+        4 => {bg: '#4ac6e8', border: '#a82424'},
+        5 => {bg: '#253b71', border: '#ffffff'},
+        6 => {bg: '#2f58ba', border: '#e03537'},
+        7 => {bg: '#253b71', border: '#2f58ba'},
+        8 => {bg: '#ffffff', border: '#01b3ed'},
+        9 => {bg: '#2f58ba', border: '#ffffff'},
+        10 => {bg: '#b82f23', border: '#e03537'},
+        11 => {bg: '#4ac6e8', border: '#ffffff'},
+        12 => {bg: '#b82f23', border: '#ffffff'},
+        13 => {bg: '#ffffff', border: '#373737'},
+        14 => {bg: '#ffffff', border: '#b82f23'},
+        15 => {bg: '#ffffff', border: '#e03537'},
+        16 => {bg: '#ffffff', border: '#d8c47c'},
+        17 => {bg: '#ffffff', border: '#cfcfd2'},
+        18 => {bg: '#fcdf22', border: '#373737'},
+        19 => {bg: '#ffffff', border: '#42588d'},
+        20 => {bg: '#a82424', border: '#4ac6e8'}
+    }
+
 end

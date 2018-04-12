@@ -63,7 +63,7 @@ module FplApiHelper
         2 => {bg: '#e03537', border: '#373737'},
         3 => {bg: '#ffffff', border: '#004cc1'},
         4 => {bg: '#4ac6e8', border: '#a82424'},
-        5 => {bg: '#253b71', border: '#ffffff'},
+        5 => {bg: '#2f58ba', border: '#2f58ba'},
         6 => {bg: '#2f58ba', border: '#e03537'},
         7 => {bg: '#253b71', border: '#2f58ba'},
         8 => {bg: '#ffffff', border: '#01b3ed'},

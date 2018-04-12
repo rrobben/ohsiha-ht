@@ -73,22 +73,36 @@ ActionJS.Fpl = {
     },
 
     chart: function() {
+        jQuery("select#chart_y_axis").val("now_cost");
+        var x = jQuery("select#chart_x_axis").val();
+        var y = jQuery("select#chart_y_axis").val();
+        ActionJS.Fpl._getChart(x, y);
+
+        jQuery('select').on('change', function(evt) {
+            var x = jQuery("select#chart_x_axis").val();
+            var y = jQuery("select#chart_y_axis").val();
+            ActionJS.Fpl._getChart(x, y);
+        });
+    },
+
+    _getChart: function(x, y) {
         var type = jQuery("#player-chart").data('type')
-        var url = Routes.fpl_chart_path({ type: type});
-        
+        var url = Routes.fpl_chart_path({ type: type });
+        /*
+
         var unit = ''
-        
-        switch(type) {
+
+        switch (type) {
             case 'ppg':
                 unit = 'PPG';
                 break;
             default:
                 unit = 'Points';
-        }
-        
+        }*/
+
         jQuery.get({
             url: url,
-            success: function(res, status, xhr) {
+            success: function (res, status, xhr) {
                 var data = {
                     datasets: res
                 }
@@ -106,7 +120,7 @@ ActionJS.Fpl = {
                         xAxes: [{
                             ticks: {
                                 callback: function (value, index, values) {
-                                    return String(value) + ' ' + unit;
+                                    return String(value);
                                 }
                             }
                         }]
@@ -118,7 +132,7 @@ ActionJS.Fpl = {
                                 return data.datasets[tips[0].datasetIndex].label;
                             },
                             label: function (tip, data) {
-                                return tip.xLabel + ' ' + unit + ' (£' + tip.yLabel + 'm)' 
+                                return tip.xLabel + ' (£' + tip.yLabel + 'm)'
                             }
                         }
                     }

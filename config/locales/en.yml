@@ -51,3 +51,31 @@ en:
   ppgm: PPM / Cost
   value_season: Value (season)
   info: Info
+  update: Update
+  total_points: Total score
+  event_points: Round score
+  now_cost: Price
+  selected_by_percent: Teams selected by %
+  matches: Matches played
+  minutes: Minutes played
+  goals_scored: Goals scored
+  assists: Assists
+  clean_sheets: Clean sheets
+  goals_conceded: Goals conceded
+  own_goals: Own goals
+  penalties_saved: Penalties saved
+  penalties_missed: Penalties missed
+  yellow_cards: Yellow cards
+  red_cards: Red cards
+  saves: Saves
+  bonus: Bonus
+  bps: Bonus Points System
+  influence: Influence
+  creativity: Creativity
+  threat: Threat
+  ict_index: ICT Index
+  form: Form
+  dreamteam_count: Times in Dream Team
+  value_form: Value (form)
+  value_season: Value (season)
+  points_per_game: Points per match

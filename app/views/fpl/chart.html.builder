@@ -10,6 +10,15 @@ xml.div(class: 'container-fluid') do
   #end
 
   xml.div(class: 'row') do
+    xml << form_for(:chart) do |f|
+      f.label(:y_axis) +
+      f.select(:y_axis, FplHelper::PLAYER_CHART_AXIS_OPTIONS.map{ |k,v| [t(k.to_sym),k]}) +
+      f.label(:x_axis) +
+      f.select(:x_axis, FplHelper::PLAYER_CHART_AXIS_OPTIONS.map{ |k,v| [t(k.to_sym),k]})
+    end
+  end
+
+  xml.div(class: 'row') do
     xml.div(class: 'col-xs-12', style: 'background-color: rgb(224, 224, 224);') do
       xml.canvas(id: 'player-chart', :'data-type' => @type, width: '1200', height: '600')
     end

@@ -8,13 +8,13 @@ Rails.application.routes.draw do
 
   # fpl functionality
   get '/index', to: 'fpl#index', as: 'index'
-  get '/chart/:type', to: 'fpl#chart', as: 'chart'
+  get '/chart', to: 'fpl#chart', as: 'chart'
   
   # fpl api requests
   get '/fpl/team/:id', to: 'fpl_api#team', as: 'fpl_team'
   get '/fpl/team/:id/history', to: 'fpl_api#gameweek_history', as: 'fpl_team_history'
   get '/fpl/players', to: 'fpl_api#players', as: 'fpl_players'
-  get '/fpl/charts/:type', to: 'fpl_api#chart', as: 'fpl_chart'
+  get '/fpl/charts/:y/:x', to: 'fpl_api#chart', as: 'fpl_chart'
   get '/fpl/player/:id', to: 'fpl_api#player', as: 'fpl_player'
 
   resources :users

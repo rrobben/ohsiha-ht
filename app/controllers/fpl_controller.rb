@@ -4,7 +4,6 @@ class FplController < ApplicationController
     end
 
     def chart
-      @type = params[:type] || 'ppg'
     end
 
 end

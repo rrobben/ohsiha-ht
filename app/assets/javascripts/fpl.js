@@ -72,83 +72,95 @@ ActionJS.Fpl = {
         });
     },
 
-    chart: function() {
-        jQuery("select#chart_y_axis").val("now_cost");
-        var x = jQuery("select#chart_x_axis").val();
-        var y = jQuery("select#chart_y_axis").val();
-        ActionJS.Fpl._getChart(x, y);
+    PlayerChart: {
+        chart: null,
 
-        jQuery('select').on('change', function(evt) {
+        init: function() {
+            jQuery("select#chart_y_axis").val("now_cost");
             var x = jQuery("select#chart_x_axis").val();
             var y = jQuery("select#chart_y_axis").val();
-            ActionJS.Fpl._getChart(x, y);
-        });
-    },
+            this.getChart(x, y);
 
-    _getChart: function(x, y) {
-        var type = jQuery("#player-chart").data('type')
-        var url = Routes.fpl_chart_path({ type: type });
-        /*
+            jQuery('select').on('change', function (evt) {
+                x = jQuery("select#chart_x_axis").val();
+                y = jQuery("select#chart_y_axis").val();
+                this.getChart(x, y);
+            }.bind(this));
+        },
 
-        var unit = ''
+        getChart: function (x, y) {
+            var playerChart = this;
+            var url = Routes.fpl_chart_path({ y: y, x: x });
+            /*
+    
+            var unit = ''
+    
+            switch (type) {
+                case 'ppg':
+                    unit = 'PPG';
+                    break;
+                default:
+                    unit = 'Points';
+            }*/
 
-        switch (type) {
-            case 'ppg':
-                unit = 'PPG';
-                break;
-            default:
-                unit = 'Points';
-        }*/
+            jQuery.get({
+                url: url,
+                success: function (res, status, xhr) {
+                    var data = {
+                        datasets: res
+                    }
 
-        jQuery.get({
-            url: url,
-            success: function (res, status, xhr) {
-                var data = {
-                    datasets: res
-                }
-
-                var options = {
-                    legend: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                callback: function (value, index, values) {
-                                    return '£' + String(value) + 'm';
+                    var options = {
+                        legend: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    callback: function (value, index, values) {
+                                        return '£' + String(value) + 'm';
+                                    }
+                                },
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    callback: function (value, index, values) {
+                                        return String(value);
+                                    }
                                 }
-                            },
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                callback: function (value, index, values) {
-                                    return String(value);
+                            }]
+                        },
+                        tooltips: {
+                            displayColors: false,
+                            callbacks: {
+                                title: function (tips, data) {
+                                    return data.datasets[tips[0].datasetIndex].label;
+                                },
+                                label: function (tip, data) {
+                                    return tip.xLabel + ' (£' + tip.yLabel + 'm)'
                                 }
-                            }
-                        }]
-                    },
-                    tooltips: {
-                        displayColors: false,
-                        callbacks: {
-                            title: function (tips, data) {
-                                return data.datasets[tips[0].datasetIndex].label;
-                            },
-                            label: function (tip, data) {
-                                return tip.xLabel + ' (£' + tip.yLabel + 'm)'
                             }
                         }
-                    }
-                };
+                    };
 
-                ActionJS.Fpl._renderChart(jQuery('#player-chart'), data, 'bubble', options);
+                    playerChart.renderChart(jQuery('#player-chart'), data, 'bubble', options);
+                }
+            });
+        },
+
+        renderChart: function (ctx, data, type, options) {
+            if (this.chart) {
+                this.chart.destroy();
             }
-        });
+            this.chart = new Chart(ctx, {
+                type: type,
+                data: data,
+                options: options
+            });
+        },
+
     },
 
-    _renderChart: function(ctx, data, type, options) {
-        var chart = new Chart(ctx, {
-            type: type,
-            data: data,
-            options: options
-        });
+    chart: function() {
+        this.PlayerChart.init();
     },
 
     _addColumnFilters: function (table, columnFilters) {

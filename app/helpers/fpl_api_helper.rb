@@ -81,4 +81,40 @@ module FplApiHelper
         20 => {bg: '#a82424', border: '#4ac6e8'}
     }
 
+    PLAYER_ATTRIBUTES = {
+        id: 'id',
+        web_name: 'web_name',
+        total_points: 'total_points',
+        event_points: 'event_points',
+        now_cost: 'now_cost',
+        selected_by_percent: 'selected_by_percent',
+        matches: 'matches',
+        minutes: 'minutes',
+        goals_scored: 'goals_scored',
+        assists: 'assists',
+        clean_sheets: 'clean_sheets',
+        goals_conceded: 'goals_conceded',
+        own_goals: 'own_goals',
+        penalties_saved: 'penalties_saved',
+        penalties_missed: 'penalties_missed',
+        yellow_cards: 'yellow_cards',
+        red_cards: 'red_cards',
+        saves: 'saves',
+        bonus: 'bonus',
+        bps: 'bps Points System',
+        influence: 'influence',
+        creativity: 'creativity',
+        threat: 'threat',
+        ict_index: 'ict_index',
+        form: 'form',
+        dreamteam_count: 'dreamteam_count',
+        value_form: 'value_form',
+        value_season: 'value_season',
+        points_per_game: 'points_per_game',
+        status: 'status',
+        chance_of_playing_next_round: 'chance_of_playing_next_round',
+        team: 'team',
+        element_type: 'element_type'
+    }
+
 end

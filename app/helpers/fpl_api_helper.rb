@@ -43,10 +43,10 @@ module FplApiHelper
     }
 
     STATUSES = {
-        's' => '0% - Suspended',
-        'u' => '0% - Unavailable',
-        'i' => '0% - Injured',
-        'n' => '0% - Unavailable',
+        's' => 'Suspended',
+        'u' => 'Unavailable',
+        'i' => 'Injured',
+        'n' => 'Unavailable',
         'a' => '100%',
         'd75' => '75%',
         'd50'=> '50%',

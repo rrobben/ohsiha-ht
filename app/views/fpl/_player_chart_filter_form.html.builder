@@ -10,10 +10,12 @@ xml.div(class: 'filter-dialog-wrapper card') do
 
   xml.div(:class => 'card-block filter-form') do
     xml << form_for(:filters, remote: true) do |f|
-      f.label(:team) +
+      f.label(t(:team)) +
       f.select(FplApiHelper::PLAYER_ATTRIBUTES[:team], FplApiHelper::TEAMS.map{ |k,v| [v,k]}, {}, class: 'select2 form-control') +
-      f.label(:position) +
+      f.label(t(:position)) +
       f.select(FplApiHelper::PLAYER_ATTRIBUTES[:element_type], FplApiHelper::POSITIONS.map{ |k,v| [v,k]}, {}, class: 'select2 form-control') +
+      f.label(t(:status)) +
+      f.select(FplApiHelper::PLAYER_ATTRIBUTES[:status], FplApiHelper::STATUSES.reject{|k,v| k == 'n' }.map{ |k,v| [v,k] }, {}, class: 'select2 form-control') +
 
       f.submit(t(:update), class: 'btn btn-primary m-1')
     end

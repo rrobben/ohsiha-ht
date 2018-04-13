@@ -11,9 +11,9 @@ xml.div(class: 'container-fluid') do
 
   xml.div(class: 'row axis-form') do
     xml << form_for(:chart) do |f|
-      f.label(:y_axis) +
+      f.label(t(:y_axis)) +
       f.select(:y_axis, FplHelper::PLAYER_CHART_AXIS_OPTIONS.map{ |k,v| [t(k.to_sym),k]}, selected: @y) +
-      f.label(:x_axis) +
+      f.label(t(:x_axis)) +
       f.select(:x_axis, FplHelper::PLAYER_CHART_AXIS_OPTIONS.map{ |k,v| [t(k.to_sym),k]}, selected: @x)
     end
   end

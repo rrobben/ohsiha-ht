@@ -71,7 +71,13 @@ class FplApiController < ApplicationController
           selected = true
 
           filters.each do |filter, value|
-            unless value.include?(r[filter].to_s)
+            player_value = r[filter].to_s
+
+            if filter == FplApiHelper::PLAYER_ATTRIBUTES[:status]
+              player_value = (r[FplApiHelper::PLAYER_ATTRIBUTES[:status]] == 'd' ? "d#{r[FplApiHelper::PLAYER_ATTRIBUTES[:chance_of_playing_next_round]]}" :  r[FplApiHelper::PLAYER_ATTRIBUTES[:status]])
+            end
+
+            unless value.include?(player_value)
               selected = false
               break
             end

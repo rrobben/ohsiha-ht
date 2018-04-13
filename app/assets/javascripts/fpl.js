@@ -96,7 +96,7 @@ ActionJS.Fpl = {
             var y = jQuery("select#chart_y_axis").val();
 
             var filters = ActionJS.Fpl.FilterForm.parseFilters();
-            history.pushState({ y: y, x: x }, window.title, Routes.chart_path({ y: y, x: x }));
+            history.pushState({ y: y, x: x, filters: filters }, window.title, Routes.chart_path({ y: y, x: x, filters: filters }));
             this.getChart(x, y, filters);
         },
 
@@ -210,6 +210,8 @@ ActionJS.Fpl = {
                 ActionJS.Fpl.PlayerChart.startLoading();
                 return false;
             });
+
+            this.setFilters();
         },
 
         showForm: function() {
@@ -263,6 +265,16 @@ ActionJS.Fpl = {
 
             return filters;
         },
+
+        setFilters: function() {
+            var filters = JSON.parse(jQuery('#filter-values').html());
+
+            Object.keys(filters).forEach(function(key) {
+                var id = '#filters_' + key;
+                jQuery('.filter-form ' + id).val(filters[key]);
+                jQuery('.filter-form ' + id).trigger('change');
+            });
+        }
     },
 
     _addColumnFilters: function (table, columnFilters) {

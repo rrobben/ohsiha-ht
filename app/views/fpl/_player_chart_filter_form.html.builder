@@ -20,3 +20,7 @@ xml.div(class: 'filter-dialog-wrapper card') do
   end
 end
 
+xml.script(type: 'text/template', id: 'filter-values') do
+  xml << @filter_values.to_json
+end
+

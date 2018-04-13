@@ -206,7 +206,7 @@ ActionJS.Fpl = {
                 });
             });
 
-            jQuery('.filter-form').on('submit', function(e) {
+            jQuery('#filter-submit').on('click', function(e) {
                 ActionJS.Fpl.PlayerChart.startLoading();
                 return false;
             });
@@ -218,8 +218,11 @@ ActionJS.Fpl = {
             if (!jQuery('.filter-dialog-wrapper').hasClass('user-hidden')) {
                 jQuery('#filter-btn').addClass('shown');
 
-                var height = jQuery(window).height() - jQuery('.filter-dialog-wrapper').position().top
+                var height = jQuery(window).height() - jQuery('.filter-dialog-wrapper').position().top;
                 jQuery('.filter-dialog-wrapper').height(height);
+
+                height = jQuery('.filter-dialog-wrapper').height() - jQuery('.filter-dialog-wrapper .filter-header').outerHeight() - jQuery('.filter-dialog-wrapper .filter-footer').outerHeight();
+                jQuery('.filter-dialog-wrapper .filter-form').height(height);
 
                 jQuery('#filter-cancel').off().on('click', function (event) {
                     this.resetForm();
@@ -246,20 +249,40 @@ ActionJS.Fpl = {
         parseFilters: function() {
             var filters = {};
             
-            jQuery('.filter-form .form-control').each(function(input) {
+            jQuery('.filter-form select').each(function(input) {
                 var elem = jQuery(this);
 
                 if (elem.val() != '') {
-                    var filter = '';
-                    var value = '';
-
-                    switch(elem.prop('nodeName').toLowerCase()) {
-                        case 'select':
-                            filter = elem.prop('id').split('filters_')[1];
-                            value = elem.val();
-                    }
-
+                    var filter = elem.prop('id').split('filters_')[1];
+                    var value = elem.val();
                     filters[filter] = value;
+                }
+            });
+
+            jQuery('.filter-form input[type="number"]').each(function (input) {
+                var elem = jQuery(this);
+
+                if (elem.val() != '') {
+                    var filter = elem.prop('id').split('filters_')[1];
+                    var value = elem.val();
+
+                    if (filter.includes('_max')) {
+                        filter = filter.split('_max')[0];
+                        
+                        if (!filters[filter]) {
+                            filters[filter] = {};
+                        }
+
+                        filters[filter]['max'] = value;
+                    } else {
+                        filter = filter.split('_min')[0];
+                        
+                        if (!filters[filter]) {
+                            filters[filter] = {};
+                        }
+                        
+                        filters[filter]['min'] = value;
+                    }
                 }
             });
 

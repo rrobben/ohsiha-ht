@@ -123,6 +123,28 @@ table.dataTable thead th {
   #filter-cancel {
     font-size: 2rem;
   }
+
+  .filter-form {
+    overflow: auto;
+
+    label {
+      margin-right: 0.5rem;
+      margin-left: 0.5rem;
+    }
+
+    input {
+      width: 4.5rem;
+      margin-right: 1rem;
+      margin-left: 1rem;
+    }
+  }
+
+  .filter-footer {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 419px;
+  }
 }
 
 .filter-dialog-wrapper.is-visible {

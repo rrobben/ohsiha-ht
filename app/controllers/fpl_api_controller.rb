@@ -71,15 +71,27 @@ class FplApiController < ApplicationController
           selected = true
 
           filters.each do |filter, value|
-            player_value = r[filter].to_s
+            if value.respond_to?('keys')
+              player_value = (filter == FplApiHelper::PLAYER_ATTRIBUTES[:now_cost] ? r[filter].to_f / 10 : r[filter].to_f)
 
-            if filter == FplApiHelper::PLAYER_ATTRIBUTES[:status]
-              player_value = (r[FplApiHelper::PLAYER_ATTRIBUTES[:status]] == 'd' ? "d#{r[FplApiHelper::PLAYER_ATTRIBUTES[:chance_of_playing_next_round]]}" :  r[FplApiHelper::PLAYER_ATTRIBUTES[:status]])
-            end
+              value.each do |k,v|
+                if k == 'min'
+                  selected = false if player_value < v.to_f
+                else
+                  selected = false if player_value > v.to_f
+                end
+              end
+            else
+              player_value = r[filter].to_s
 
-            unless value.include?(player_value)
-              selected = false
-              break
+              if filter == FplApiHelper::PLAYER_ATTRIBUTES[:status]
+                player_value = (r[FplApiHelper::PLAYER_ATTRIBUTES[:status]] == 'd' ? "d#{r[FplApiHelper::PLAYER_ATTRIBUTES[:chance_of_playing_next_round]]}" :  r[FplApiHelper::PLAYER_ATTRIBUTES[:status]])
+              end
+
+              unless value.include?(player_value)
+                selected = false
+                break
+              end
             end
           end
 

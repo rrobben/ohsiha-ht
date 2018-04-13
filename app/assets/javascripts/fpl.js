@@ -59,6 +59,7 @@ ActionJS.Fpl = {
         });
 
         jQuery('#player-modal').on('show.bs.modal', function (event) {
+            Indicator.set('#player-modal .modal-content', true);
             var url = jQuery(event.relatedTarget).data('url');     
             var modal = $(this);       
 
@@ -67,6 +68,7 @@ ActionJS.Fpl = {
                 success: function(data) {
                     modal.find('.modal-title').text(data.name);
                     modal.find('.modal-body').text(data.points);
+                    Indicator.remove('#player-modal .modal-content');
                 }
             });
         });

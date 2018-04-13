@@ -17,6 +17,7 @@
 //= require dataTables/jquery.dataTables
 //= require Chart.min
 //= require js-routes
+//= require select2
 //= require tether
 //= require_tree .
 

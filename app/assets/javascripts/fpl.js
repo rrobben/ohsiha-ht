@@ -81,20 +81,28 @@ ActionJS.Fpl = {
             Indicator.set('#chart-content', true);
             var x = jQuery("select#chart_x_axis").val();
             var y = jQuery("select#chart_y_axis").val();
-            this.getChart(x, y);
 
-            jQuery('select').on('change', function (evt) {
-                Indicator.set('#chart-content', true);
-                x = jQuery("select#chart_x_axis").val();
-                y = jQuery("select#chart_y_axis").val();
-                history.pushState({ y: y, x: x }, window.title, Routes.chart_path({ y: y, x: x }));
-                this.getChart(x, y);
+            var filters = ActionJS.Fpl.FilterForm.parseFilters();
+            this.getChart(x, y, filters);
+
+            jQuery('.axis-form select').on('change', function (evt) {
+                this.startLoading();
             }.bind(this));
         },
 
-        getChart: function (x, y) {
+        startLoading: function() {
+            Indicator.set('#chart-content', true);
+            var x = jQuery("select#chart_x_axis").val();
+            var y = jQuery("select#chart_y_axis").val();
+
+            var filters = ActionJS.Fpl.FilterForm.parseFilters();
+            history.pushState({ y: y, x: x }, window.title, Routes.chart_path({ y: y, x: x }));
+            this.getChart(x, y, filters);
+        },
+
+        getChart: function (x, y, filters) {
             var playerChart = this;
-            var url = Routes.fpl_chart_path({ y: y, x: x });
+            var url = Routes.fpl_chart_path({ y: y, x: x, filters: filters });
             var xUnit = '';
             var yUnit = '';
             var xPreUnit = '';
@@ -173,7 +181,88 @@ ActionJS.Fpl = {
     },
 
     chart: function() {
+        this.FilterForm.init();
         this.PlayerChart.init();
+    },
+
+    FilterForm: {
+        init: function() {
+            jQuery('#filter-btn').on('click', function() {
+                if (jQuery('#filter-btn').hasClass('shown')) {
+                    this.hideForm();
+                } else {
+                    jQuery('.filter-dialog-wrapper').removeClass('user-hidden');
+                    this.showForm();
+                }
+            }.bind(this));
+
+            jQuery('.filter-form select.select2').each(function(select) {
+                jQuery(this).prop('multiple', true);
+                jQuery(this).val('');
+
+                jQuery(this).select2({
+                    theme: 'bootstrap',
+                    width: '100%'
+                });
+            });
+
+            jQuery('.filter-form').on('submit', function(e) {
+                ActionJS.Fpl.PlayerChart.startLoading();
+                return false;
+            });
+        },
+
+        showForm: function() {
+            if (!jQuery('.filter-dialog-wrapper').hasClass('user-hidden')) {
+                jQuery('#filter-btn').addClass('shown');
+
+                var height = jQuery(window).height() - jQuery('.filter-dialog-wrapper').position().top
+                jQuery('.filter-dialog-wrapper').height(height);
+
+                jQuery('#filter-cancel').off().on('click', function (event) {
+                    this.resetForm();
+                    event.preventDefault();
+                    return false;
+                }.bind(this));
+
+                jQuery('.filter-dialog-wrapper').addClass('is-visible');
+            }
+        },
+
+        hideForm: function () {
+            jQuery('.filter-dialog-wrapper').removeClass('is-visible');
+            jQuery('#filter-btn').removeClass('shown');
+            jQuery('.filter-dialog-wrapper').addClass('user-hidden');
+        },
+
+        resetForm: function () {
+            jQuery('.filter-dialog-wrapper').removeClass('is-visible');
+            jQuery('#filter-btn').removeClass('shown');
+            jQuery('.filter-dialog-wrapper').removeClass('user-hidden');
+        },
+
+        parseFilters: function() {
+            var filters = {};
+            
+            jQuery('.filter-form .form-control').each(function(input) {
+                var elem = jQuery(this);
+
+                if (elem.val() != '') {
+                    var filter = '';
+                    var value = '';
+
+                    switch(elem.prop('nodeName').toLowerCase()) {
+                        case 'select':
+                            filter = elem.prop('id').split('filters_')[1];
+                            value = elem.val();
+                    }
+
+                    filters[filter] = value;
+                }
+            });
+
+            return filters;
+        },
     },
 
     _addColumnFilters: function (table, columnFilters) {
@@ -183,7 +272,7 @@ ActionJS.Fpl = {
             }
 
             var column = table.api().column(colIndex);
-            var filters = jQuery('<div class="filters"><a href="#" class="toggle"><i class="icon icon-filter"></i>Filter</a></div>').appendTo(jQuery(column.header()));
+            var filters = jQuery('<div class="filters"><a href="#" class="toggle"><i class="fa fa-filter"></i> Filter</a></div>').appendTo(jQuery(column.header()));
 
             var selector = jQuery('<div class="selector" style="display:none;"><div class="values"></div></div>').appendTo(filters);
             var selectorValues = selector.find('.values');
@@ -293,8 +382,6 @@ ActionJS.Fpl = {
             state = table.api().state();
         }
 
-        console.log(state)
-
         if (state && state.columns) {
             for (var i = 0; i < state.columns.length; i++) {
                 var filtersFound = false;
@@ -302,9 +389,6 @@ ActionJS.Fpl = {
                 if (state.columns[i].search && state.columns[i].search.search != '') {
                     var values = state.columns[i].search.search.split('|');
                     filtersFound = values.length > 0;
-
-                    console.log(values)
-                    console.log(filtersFound)
 
                     for (var j = 0; j < values.length; j++) {
                         jQuery('[data-col-link^="' + i + '"] input[value="' + values[j] + '"]').prop('checked', true);

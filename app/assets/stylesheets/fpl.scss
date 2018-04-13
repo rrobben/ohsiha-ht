@@ -105,3 +105,35 @@ table.dataTable thead th {
     width: inherit;
   }
 }
+
+/*
+ * Filter form
+ */
+.filter-dialog-wrapper {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  width: 420px;
+  z-index: 2;
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-delay: 0s;
+  transform: translate3d(100%,0,0);
+
+  #filter-cancel {
+    font-size: 2rem;
+  }
+}
+
+.filter-dialog-wrapper.is-visible {
+  transform: translate3d(0%,0,0);
+}
+
+.select2-container--bootstrap .select2-results__option[aria-selected=true] {
+    background-color: #e2e2e2;
+}
+
+.select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+    background-color: #337ab7;
+    color: #fff;
+}

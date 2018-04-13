@@ -31,7 +31,8 @@ class FplApiController < ApplicationController
     def chart
       y = params[:y] || FplApiHelper::PLAYER_ATTRIBUTES[:now_cost]
       x = params[:x] || FplApiHelper::PLAYER_ATTRIBUTES[:total_points]
-      json =  parse_players_chart_data(get_data(FplApiHelper::PLAYERS_URL), x, y)
+      filters = params[:filters] || {}
+      json =  parse_players_chart_data(get_data(FplApiHelper::PLAYERS_URL), x, y, filters)
       return render(json: json)
     end
 
@@ -54,7 +55,7 @@ class FplApiController < ApplicationController
     end
 
 
-    def parse_players_chart_data(response, x, y)
+    def parse_players_chart_data(response, x, y, filters)
       players = []
       x_matches = (x == FplApiHelper::PLAYER_ATTRIBUTES[:matches] ? true : false)
       x_price = (x == FplApiHelper::PLAYER_ATTRIBUTES[:now_cost] ? true : false)
@@ -67,6 +68,17 @@ class FplApiController < ApplicationController
 
       response.each do |r|
         if r[x].to_f > 0.0 && r[y].to_f > 0.0
+          selected = true
+
+          filters.each do |filter, value|
+            unless value.include?(r[filter].to_s)
+              selected = false
+              break
+            end
+          end
+
+          next unless selected
+
           x_value = r[x].to_f
           y_value = r[y].to_f
 

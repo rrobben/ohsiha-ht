@@ -76,14 +76,16 @@ ActionJS.Fpl = {
         chart: null,
 
         init: function() {
-            jQuery("select#chart_y_axis").val("now_cost");
+            Indicator.set('#chart-content', true);
             var x = jQuery("select#chart_x_axis").val();
             var y = jQuery("select#chart_y_axis").val();
             this.getChart(x, y);
 
             jQuery('select').on('change', function (evt) {
+                Indicator.set('#chart-content', true);
                 x = jQuery("select#chart_x_axis").val();
                 y = jQuery("select#chart_y_axis").val();
+                history.pushState({ y: y, x: x }, window.title, Routes.chart_path({ y: y, x: x }));
                 this.getChart(x, y);
             }.bind(this));
         },
@@ -91,17 +93,24 @@ ActionJS.Fpl = {
         getChart: function (x, y) {
             var playerChart = this;
             var url = Routes.fpl_chart_path({ y: y, x: x });
-            /*
+            var xUnit = '';
+            var yUnit = '';
+            var xPreUnit = '';
+            var yPreUnit = '';
     
-            var unit = ''
-    
-            switch (type) {
-                case 'ppg':
-                    unit = 'PPG';
-                    break;
-                default:
-                    unit = 'Points';
-            }*/
+            if (x == 'now_cost') {
+                xUnit = 'm';
+                xPreUnit = '£';
+            } else if (x == 'selected_by_percent') {
+                xUnit = '%';
+            }
+
+            if (y == 'now_cost') {
+                yUnit = 'm';
+                yPreUnit = '£';
+            } else if (y == 'selected_by_percent') {
+                yUnit = '%';
+            }
 
             jQuery.get({
                 url: url,
@@ -116,14 +125,14 @@ ActionJS.Fpl = {
                             yAxes: [{
                                 ticks: {
                                     callback: function (value, index, values) {
-                                        return '£' + String(value) + 'm';
+                                        return yPreUnit + String(value) + yUnit;
                                     }
                                 },
                             }],
                             xAxes: [{
                                 ticks: {
                                     callback: function (value, index, values) {
-                                        return String(value);
+                                        return xPreUnit + String(value) + xUnit;
                                     }
                                 }
                             }]
@@ -135,13 +144,14 @@ ActionJS.Fpl = {
                                     return data.datasets[tips[0].datasetIndex].label;
                                 },
                                 label: function (tip, data) {
-                                    return tip.xLabel + ' (£' + tip.yLabel + 'm)'
+                                    return xPreUnit + tip.xLabel + xUnit + ' (' + yPreUnit + tip.yLabel + yUnit + ')'
                                 }
                             }
                         }
                     };
 
                     playerChart.renderChart(jQuery('#player-chart'), data, 'bubble', options);
+                    Indicator.remove('#chart-content');
                 }
             });
         },
@@ -150,6 +160,7 @@ ActionJS.Fpl = {
             if (this.chart) {
                 this.chart.destroy();
             }
+            
             this.chart = new Chart(ctx, {
                 type: type,
                 data: data,

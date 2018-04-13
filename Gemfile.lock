@@ -75,6 +75,8 @@ GEM
     erubi (1.7.0)
     execjs (2.7.0)
     ffi (1.9.23)
+    font-awesome-rails (4.7.0.4)
+      railties (>= 3.2, < 6.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     i18n (0.9.5)
@@ -212,6 +214,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   chartjs-ror
   coffee-rails (~> 4.2)
+  font-awesome-rails
   jbuilder (~> 2.5)
   jquery-datatables-rails (~> 3.4)
   jquery-rails

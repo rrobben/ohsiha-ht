@@ -74,3 +74,34 @@ table.dataTable thead th {
 
   }
 }
+
+/*
+ * Indicator
+ */
+.indicator {
+  height: 5rem;
+  width: 100%;
+  line-height: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 999;
+
+  &.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  i {
+    position: absolute;
+    top: 30%;
+    font-size: 500%;
+    color: navy;
+    opacity: 0.8;
+    display: block;
+    width: inherit;
+  }
+}

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   # fpl functionality
   get '/index', to: 'fpl#index', as: 'index'
-  get '/chart', to: 'fpl#chart', as: 'chart'
+  get '/chart(/:y/:x)', to: 'fpl#chart', as: 'chart'
   
   # fpl api requests
   get '/fpl/team/:id', to: 'fpl_api#team', as: 'fpl_team'

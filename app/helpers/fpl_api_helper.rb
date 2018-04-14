@@ -84,6 +84,8 @@ module FplApiHelper
     PLAYER_ATTRIBUTES = {
         id: 'id',
         web_name: 'web_name',
+        first_name: 'first_name',
+        second_name: 'second_name',
         total_points: 'total_points',
         event_points: 'event_points',
         now_cost: 'now_cost',
@@ -114,7 +116,8 @@ module FplApiHelper
         status: 'status',
         chance_of_playing_next_round: 'chance_of_playing_next_round',
         team: 'team',
-        element_type: 'element_type'
+        element_type: 'element_type',
+        news: 'news'
     }
 
 end

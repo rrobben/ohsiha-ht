@@ -152,13 +152,16 @@ class FplApiController < ApplicationController
       p = {
         id: r[FplApiHelper::PLAYER_ATTRIBUTES[:id]],
         name: r[FplApiHelper::PLAYER_ATTRIBUTES[:web_name]],
+        first_name: r[FplApiHelper::PLAYER_ATTRIBUTES[:first_name]],
+        second_name: r[FplApiHelper::PLAYER_ATTRIBUTES[:second_name]],
         team: FplApiHelper::TEAMS[r[FplApiHelper::PLAYER_ATTRIBUTES[:team]]],
         position: FplApiHelper::POSITIONS[r[FplApiHelper::PLAYER_ATTRIBUTES[:element_type]]],
         status: status,
         cost: (r[FplApiHelper::PLAYER_ATTRIBUTES[:now_cost]] / 10.0).to_s,
         points: r[FplApiHelper::PLAYER_ATTRIBUTES[:total_points]],
         value: r[FplApiHelper::PLAYER_ATTRIBUTES[:value_season]],
-        ppg: r[FplApiHelper::PLAYER_ATTRIBUTES[:points_per_game]]
+        ppg: r[FplApiHelper::PLAYER_ATTRIBUTES[:points_per_game]],
+        news: r[FplApiHelper::PLAYER_ATTRIBUTES[:news]]
       }
 
       p[:ppgm] = ((p[:ppg].to_f / p[:cost].to_f).round(1)).to_s

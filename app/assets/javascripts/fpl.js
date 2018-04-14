@@ -66,8 +66,8 @@ ActionJS.Fpl = {
             jQuery.get({
                 url: url,
                 success: function(data) {
-                    modal.find('.modal-title').text(data.name);
-                    modal.find('.modal-body').text(data.points);
+                    modal.find('.modal-title').text(data.first_name + ' ' + data.second_name);
+                    modal.find('.modal-body').text(data.news);
                     Indicator.remove('#player-modal .modal-content');
                 }
             });

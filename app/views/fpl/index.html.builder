@@ -27,7 +27,12 @@ end
 filter_options = { 
   2 => FplApiHelper::TEAMS.values.uniq,
   3 => FplApiHelper::POSITIONS.values.uniq,
-  4 => FplApiHelper::STATUSES.values.uniq
+  4 => FplApiHelper::STATUSES.values.uniq,
+  5 => true,
+  6 => true,
+  7 => true,
+  8 => true,
+  9 => true
 }
 
 xml.script(:type => 'text/template', :id => 'filters-json') do

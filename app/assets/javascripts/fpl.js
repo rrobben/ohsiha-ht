@@ -208,8 +208,11 @@ ActionJS.Fpl = {
 
             jQuery('#filter-submit').on('click', function(e) {
                 ActionJS.Fpl.PlayerChart.startLoading();
-                return false;
             });
+
+            jQuery('#filter-reset').on('click', function (e) {
+                this.resetFilters();
+            }.bind(this));
 
             this.setFilters();
         },
@@ -276,11 +279,11 @@ ActionJS.Fpl = {
                         filters[filter]['max'] = value;
                     } else {
                         filter = filter.split('_min')[0];
-                        
+
                         if (!filters[filter]) {
                             filters[filter] = {};
                         }
-                        
+
                         filters[filter]['min'] = value;
                     }
                 }
@@ -293,9 +296,29 @@ ActionJS.Fpl = {
             var filters = JSON.parse(jQuery('#filter-values').html());
 
             Object.keys(filters).forEach(function(key) {
-                var id = '#filters_' + key;
-                jQuery('.filter-form ' + id).val(filters[key]);
-                jQuery('.filter-form ' + id).trigger('change');
+                if (Object.prototype.toString.call(filters[key]).toLowerCase().includes('array')) {
+                    var id = '#filters_' + key;
+                    jQuery('.filter-form ' + id).val(filters[key]);
+                    jQuery('.filter-form ' + id).trigger('change');
+                } else {
+                    Object.keys(filters[key]).forEach(function(k) {
+                        var id = '#filters_' + key + '_' + k;
+                        jQuery('.filter-form ' + id).val(filters[key][k]);
+                        jQuery('.filter-form ' + id).trigger('change');
+                    });
+                }
+            });
+        },
+
+        resetFilters: function() {
+            jQuery('.filter-form select').each(function (input) {
+                jQuery(this).val('');
+                jQuery(this).trigger('change');
+            });
+
+            jQuery('.filter-form input[type="number"]').each(function (input) {
+                jQuery(this).val('');
+                jQuery(this).trigger('change');
             });
         }
     },

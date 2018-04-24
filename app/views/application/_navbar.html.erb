@@ -1,10 +1,10 @@
 <div class="navbar">
   <ul>
     <li>
-      <%= link_to(t(:home), root_path) %>
+      <%= link_to(t(:table), root_path) %>
     </li>
     <li>
-      <%= link_to(t(:chart), chart_path) %>
+      <%= link_to(t(:chart), chart_path, :'data-turbolinks' => false) %>
     </li>
 
     <% if logged_user_id %>

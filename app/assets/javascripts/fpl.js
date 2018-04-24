@@ -4,10 +4,10 @@ ActionJS.Fpl = {
         // TODO: Column filtering
         // TODO: Range Filtering with dialog etc.
         // TODO: Column hide / show
+        console.log(Routes.fpl_players_path())
         jQuery('#players-table').DataTable({
             ajax: {
-                //url: Routes.fpl_players_path(),
-                url: 'https://ohsiha-ht.herokuapp.com/fpl/players/',
+                url: Routes.fpl_players_path(),
                 dataSrc: ''
             },
             processing: true,

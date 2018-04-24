@@ -1,72 +1,72 @@
 ActionJS.Fpl = {
+
     index: function() {
-        // ADA
-        // TODO: Column filtering
-        // TODO: Range Filtering with dialog etc.
         // TODO: Column hide / show
-        console.log(Routes.fpl_players_path())
-        jQuery('#players-table').DataTable({
-            ajax: {
-                url: Routes.fpl_players_path(),
-                dataSrc: ''
-            },
-            processing: true,
-            stateSave: true,
-            order: [[6, 'desc'], [7, 'desc']],
-            columns: [
-                {
-                    data: 'id',
-                    orderable: false,
-                    render: function (data, type) {
-                        if (type == 'display') {
-                            return jQuery('#modal-btn-template').html().replace(/__id__/g, data);
+
+        if (!jQuery('#players-table').hasClass('dataTable')) {
+            jQuery('#players-table').DataTable({
+                ajax: {
+                    url: Routes.fpl_players_path(),
+                    dataSrc: ''
+                },
+                processing: true,
+                stateSave: true,
+                order: [[6, 'desc'], [7, 'desc']],
+                columns: [
+                    {
+                        data: 'id',
+                        orderable: false,
+                        render: function (data, type) {
+                            if (type == 'display') {
+                                return jQuery('#modal-btn-template').html().replace(/__id__/g, data);
+                            }
+
+                            return null;
                         }
-
-                        return null;
-                    }
-                },
-                {
-                    data: 'name',
-                    searchable: true
-                },
-                { 
-                    data: 'team',
-                    searchable: true
-                },
-                { 
-                    data: 'position',
-                    searchable: true
-                },
-                { 
-                    data: 'status',
-                    orderable: false,
-                    searchable: true
-                },
-                { data: 'cost' },
-                { data: 'points' },
-                { data: 'value' },
-                { data: 'ppg' },
-                { data: 'ppgm' },
-            ],
-            initComplete: function() {
-                TableHelper.addColumnFilters(this, JSON.parse(jQuery('#filters-json').html()));
-            }
-        });
-
-        jQuery('#player-modal').on('show.bs.modal', function (event) {
-            Indicator.set('#player-modal .modal-content', true);
-            var url = jQuery(event.relatedTarget).data('url');     
-            var modal = $(this);       
-
-            jQuery.get({
-                url: url,
-                success: function(data) {
-                    modal.find('.modal-title').text(data.first_name + ' ' + data.second_name);
-                    modal.find('.modal-body').text(data.news);
-                    Indicator.remove('#player-modal .modal-content');
+                    },
+                    {
+                        data: 'name',
+                        searchable: true
+                    },
+                    { 
+                        data: 'team',
+                        searchable: true
+                    },
+                    { 
+                        data: 'position',
+                        searchable: true
+                    },
+                    { 
+                        data: 'status',
+                        orderable: false,
+                        searchable: true
+                    },
+                    { data: 'cost' },
+                    { data: 'points' },
+                    { data: 'value' },
+                    { data: 'ppg' },
+                    { data: 'ppgm' },
+                ],
+                initComplete: function() {
+                    TableHelper.addColumnFilters(this, JSON.parse(jQuery('#filters-json').html()));
                 }
             });
-        });
+
+            jQuery('#player-modal').on('show.bs.modal', function (event) {
+                Indicator.set('#player-modal .modal-content', true);
+                var url = jQuery(event.relatedTarget).data('url');     
+                var modal = $(this);       
+
+                jQuery.get({
+                    url: url,
+                    success: function(data) {
+                        modal.find('.modal-title').text(data.first_name + ' ' + data.second_name);
+                        modal.find('.modal-body').text(data.news);
+                        Indicator.remove('#player-modal .modal-content');
+                    }
+                });
+            });
+        }
     },
 
     PlayerChart: {

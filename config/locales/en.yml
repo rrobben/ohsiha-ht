@@ -84,3 +84,11 @@ en:
   x_axis: X-axis
   y_axis: Y-axis
   reset: Reset
+  chart: Chart
+  login: Login
+  home: Home
+  my_profile: My profile
+  close: Close
+  cancel: Cancel
+  loading: Loading
+  save: Save

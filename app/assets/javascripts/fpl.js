@@ -6,7 +6,8 @@ ActionJS.Fpl = {
         // TODO: Column hide / show
         jQuery('#players-table').DataTable({
             ajax: {
-                url: Routes.fpl_players_path(),
+                //url: Routes.fpl_players_path(),
+                url: 'https://ohsiha-ht.herokuapp.com/fpl/players/'
                 dataSrc: ''
             },
             processing: true,

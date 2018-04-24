@@ -7,7 +7,7 @@ ActionJS.Fpl = {
         jQuery('#players-table').DataTable({
             ajax: {
                 //url: Routes.fpl_players_path(),
-                url: 'https://ohsiha-ht.herokuapp.com/fpl/players/'
+                url: 'https://ohsiha-ht.herokuapp.com/fpl/players/',
                 dataSrc: ''
             },
             processing: true,

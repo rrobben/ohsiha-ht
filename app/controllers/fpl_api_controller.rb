@@ -1,7 +1,8 @@
 class FplApiController < ApplicationController
 
     def players
-      json = parse_players_table_data(get_data(FplApiHelper::PLAYERS_URL))
+      watchlist = params[:watchlist] == 'true' || false
+      json = parse_players_table_data(get_data(FplApiHelper::PLAYERS_URL), watchlist)
       return render(json: json)
     end
 
@@ -47,9 +48,11 @@ class FplApiController < ApplicationController
 
 
     def parse_player_data(response, id)
+      fp = FollowedPlayer.where(user_id: logged_user_id)
+
       response.each do |r|
         if id == r[FplApiHelper::PLAYER_ATTRIBUTES[:id]].to_s
-          return parse_player_attributes(r)
+          return parse_player_attributes(r, fp)
         end
       end
     end
@@ -135,18 +138,23 @@ class FplApiController < ApplicationController
     end
 
 
-    def parse_players_table_data(response)
+    def parse_players_table_data(response, watchlist)
       players = []
+      fp = FollowedPlayer.where(user_id: logged_user_id)
 
       response.each do |r|
         players << parse_player_attributes(r)
+      end
+
+      if watchlist
+        players = players.select{ |p| fp.exists?(player_id: p[:id])}
       end
       
       players
     end
 
 
-    def parse_player_attributes(r)
+    def parse_player_attributes(r, watchlist = nil)
       status = (r[FplApiHelper::PLAYER_ATTRIBUTES[:status]] == 'd' ? "#{r[FplApiHelper::PLAYER_ATTRIBUTES[:chance_of_playing_next_round]]}%" :  FplApiHelper::STATUSES[r[FplApiHelper::PLAYER_ATTRIBUTES[:status]]])
 
       p = {
@@ -161,7 +169,8 @@ class FplApiController < ApplicationController
         points: r[FplApiHelper::PLAYER_ATTRIBUTES[:total_points]],
         value: r[FplApiHelper::PLAYER_ATTRIBUTES[:value_season]],
         ppg: r[FplApiHelper::PLAYER_ATTRIBUTES[:points_per_game]],
-        news: r[FplApiHelper::PLAYER_ATTRIBUTES[:news]]
+        news: r[FplApiHelper::PLAYER_ATTRIBUTES[:news]],
+        watchlist: (watchlist ? watchlist.exists?(player_id: r[FplApiHelper::PLAYER_ATTRIBUTES[:id]]) : watchlist)
       }
 
       p[:ppgm] = ((p[:ppg].to_f / p[:cost].to_f).round(1)).to_s

@@ -1,0 +1,14 @@
+<% I18n.backend.send(:init_translations) unless I18n.backend.initialized? %>
+<script type="text/javascript">
+  window.I18n = {
+    keys: <%= I18n.backend.send(:translations)[I18n.locale].to_json.html_safe %>,
+    t: function(k, params) {
+      var p = params || {};
+      var translation = (window.I18n.keys[k] || []).slice(0) || k;
+      for (paramKey in p) {
+        translation = translation.replace(new RegExp('%{' + paramKey + '}', 'ig'), p[paramKey]);
+      }
+      return translation;
+    }
+  }
+</script>

@@ -1,14 +1,16 @@
 ActionJS.Fpl = {
 
-    index: function() {
-        // TODO: Column hide / show
+    _getTable: function(watchlist) {
+        console.log("Action: index")
+        // TODO: Column hide / show        
 
         if (!jQuery('#players-table').hasClass('dataTable')) {
             jQuery('#players-table').DataTable({
                 ajax: {
-                    url: Routes.fpl_players_path(),
+                    url: Routes.fpl_players_path({watchlist: watchlist}),
                     dataSrc: ''
                 },
+                rowId: 'id',
                 processing: true,
                 stateSave: true,
                 order: [[6, 'desc'], [7, 'desc']],
@@ -16,7 +18,7 @@ ActionJS.Fpl = {
                     {
                         data: 'id',
                         orderable: false,
-                        render: function (data, type) {
+                        render: function (data, type, row) {
                             if (type == 'display') {
                                 return jQuery('#modal-btn-template').html().replace(/__id__/g, data);
                             }
@@ -62,11 +64,41 @@ ActionJS.Fpl = {
                     success: function(data) {
                         modal.find('.modal-title').text(data.first_name + ' ' + data.second_name);
                         modal.find('.modal-body').text(data.news);
+                        modal.find('.modal-footer form #player_id').val(data.id);
+
+                        if (data.watchlist) {
+                            modal.find('.modal-footer .btn').val(I18n.t('remove_from_watchlist'));
+                        } else {
+                            modal.find('.modal-footer .btn').val(I18n.t('add_to_watchlist'));
+                        }
+                        
                         Indicator.remove('#player-modal .modal-content');
+
+                        modal.find('.modal-footer form').off('submit').on('submit', function(e) {
+                            var url = jQuery(this).attr('action').replace(/__player_id__/g, data.id);
+                            jQuery(this).attr('action', url);
+                            var table = jQuery('#players-table').DataTable();
+
+                            if (modal.find('.modal-footer .btn').val() == I18n.t('add_to_watchlist')) {
+                                modal.find('.modal-footer .btn').val(I18n.t('remove_from_watchlist'));
+                                if (watchlist) table.row.add(data).draw();
+                            } else {
+                                modal.find('.modal-footer .btn').val(I18n.t('add_to_watchlist'));
+                                if (watchlist) table.row('#' + data.id).remove().draw();
+                            }
+                        });
                     }
                 });
             });
         }
+    },
+
+    index: function() {
+        ActionJS.Fpl._getTable(false);
+    },
+
+    watchlist: function() {
+        ActionJS.Fpl._getTable(true);
     },
 
     PlayerChart: {
@@ -165,6 +197,8 @@ ActionJS.Fpl = {
             if (this.chart) {
                 this.chart.destroy();
             }
+
+            console.log("renderChart")
             
             this.chart = new Chart(ctx, {
                 type: type,
@@ -178,6 +212,7 @@ ActionJS.Fpl = {
     chart: function() {
         this.FilterForm.init();
         this.PlayerChart.init();
+        console.log("Action: chart")
     },
 
     FilterForm: {

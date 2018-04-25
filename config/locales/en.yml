@@ -94,4 +94,7 @@ en:
   save: Save
   table: Table
   element_type: Position
-  
+  news: News
+  watchlist: Watchlist
+  add_to_watchlist: Add to watchlist
+  remove_from_watchlist: Remove from watchlist

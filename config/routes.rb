@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # fpl functionality
   get '/index', to: 'fpl#index', as: 'index'
   get '/chart(/:y/:x)', to: 'fpl#chart', as: 'chart'
+  get '/watchlist', to: 'fpl#watchlist', as: 'watchlist'
+  post '/toggle_watchlist', to: 'fpl#toggle_watchlist', as: 'toggle_watchlist'
   
   # fpl api requests
   get '/fpl/team/:id', to: 'fpl_api#team', as: 'fpl_team'

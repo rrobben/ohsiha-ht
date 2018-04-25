@@ -9,6 +9,9 @@
 
     <% if logged_user_id %>
       <li>
+        <%= link_to(t(:watchlist), watchlist_path) %>
+      </li>
+      <li>
         <%= link_to(t(:my_profile), edit_user_path(id: logged_user_id)) %>
       </li>
       <li>

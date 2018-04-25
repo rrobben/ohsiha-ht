@@ -53,6 +53,14 @@ xml.div(class: 'modal fade', id: 'player-modal', role: 'dialog') do
       end
       xml.div(class: 'modal-body') do
       end
+      if logged_user_id
+        xml.div(class: 'modal-footer') do
+          xml << form_for(:player, url: toggle_watchlist_path, remote: true) do |f|
+            f.hidden_field(:id) +
+            f.submit(t(:add_to_watchlist), class: 'btn btn-primary')
+          end
+        end
+      end
     end
   end
 end

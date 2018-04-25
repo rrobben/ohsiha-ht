@@ -1,4 +1,4 @@
-xml.div do
+xml.div(class: 'user-form') do
   if @user.errors.any?
     xml.ul do
       @user.errors.full_messages.each do |e|

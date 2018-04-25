@@ -220,6 +220,20 @@ var TableHelper = {
                                     return selected;
                                 };
                                 break;
+                            case "32":
+                                filtering = function (settings, data, dataIndex) {
+                                    //32
+                                    var selected = true;
+                                    jQuery.each(vals, function (i, values) {
+                                        jQuery.each(values, function (key, value) {
+                                            if ((key == 'min' && parseFloat(data[colIndex]) < parseFloat(value)) || (key == 'max' && parseFloat(data[colIndex]) > parseFloat(value))) {
+                                                selected = false;
+                                            }
+                                        });
+                                    });
+                                    return selected;
+                                };
+                                break;
                         }
 
                         $.fn.dataTable.ext.search.push(filtering);

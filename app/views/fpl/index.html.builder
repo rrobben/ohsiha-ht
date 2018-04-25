@@ -4,7 +4,7 @@ xml.div(class: 'container-fluid') do
       xml.table(id: 'players-table') do
         xml.thead do
           xml.tr do
-            FplHelper::PLAYER_TABLE_COLUMNS.each_with_index do |c, i|
+            (FplHelper::PLAYER_TABLE_COLUMNS + FplHelper::PLAYER_TABLE_OPTION_COLUMNS).each_with_index do |c, i|
               xml.th(:'data-col' => i) do
                 xml << t(c.to_sym) if c
               end
@@ -32,7 +32,8 @@ filter_options = {
   6 => true,
   7 => true,
   8 => true,
-  9 => true
+  9 => true,
+  32 => true
 }
 
 xml.script(:type => 'text/template', :id => 'filters-json') do

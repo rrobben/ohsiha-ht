@@ -158,22 +158,24 @@ class FplApiController < ApplicationController
       status = (r[FplApiHelper::PLAYER_ATTRIBUTES[:status]] == 'd' ? "#{r[FplApiHelper::PLAYER_ATTRIBUTES[:chance_of_playing_next_round]]}%" :  FplApiHelper::STATUSES[r[FplApiHelper::PLAYER_ATTRIBUTES[:status]]])
 
       p = {
-        id: r[FplApiHelper::PLAYER_ATTRIBUTES[:id]],
-        name: r[FplApiHelper::PLAYER_ATTRIBUTES[:web_name]],
-        first_name: r[FplApiHelper::PLAYER_ATTRIBUTES[:first_name]],
-        second_name: r[FplApiHelper::PLAYER_ATTRIBUTES[:second_name]],
         team: FplApiHelper::TEAMS[r[FplApiHelper::PLAYER_ATTRIBUTES[:team]]],
         position: FplApiHelper::POSITIONS[r[FplApiHelper::PLAYER_ATTRIBUTES[:element_type]]],
         status: status,
         cost: (r[FplApiHelper::PLAYER_ATTRIBUTES[:now_cost]] / 10.0).to_s,
-        points: r[FplApiHelper::PLAYER_ATTRIBUTES[:total_points]],
-        value: r[FplApiHelper::PLAYER_ATTRIBUTES[:value_season]],
-        ppg: r[FplApiHelper::PLAYER_ATTRIBUTES[:points_per_game]],
-        news: r[FplApiHelper::PLAYER_ATTRIBUTES[:news]],
         watchlist: (watchlist ? watchlist.exists?(player_id: r[FplApiHelper::PLAYER_ATTRIBUTES[:id]]) : watchlist)
       }
 
-      p[:ppgm] = ((p[:ppg].to_f / p[:cost].to_f).round(1)).to_s
+      FplApiHelper::PLAYER_ATTRIBUTES.each do |k,v|
+        next if [:status, :now_cost, :team, :element_type, :matches].include?(k)
+        p[k] = r[v]
+      end
+
+      p[:ppgm] = ((p[:points_per_game].to_f / p[:cost].to_f).round(1)).to_s
+      if p[:points_per_game].to_f == 0.0
+        p[:matches] = 0
+      else
+        p[:matches] = (p[:total_points].to_f / p[:points_per_game].to_f).round
+      end
 
       return p
     end

@@ -24,9 +24,9 @@ xml.div(class: 'filter-dialog-wrapper card') do
               xml << select(:filters, v, FplApiHelper::STATUSES.reject{|k,v| k == 'n' }.map{ |k,v| [v,k] }, {}, class: 'select2')
           end
         else
-          xml << number_field(:filters, "#{v}_min", class: 'pull-right')
-          xml << label(:filters, '-', class: 'pull-right')
           xml << number_field(:filters, "#{v}_max", class: 'pull-right')
+          xml << label(:filters, '-', class: 'pull-right')
+          xml << number_field(:filters, "#{v}_min", class: 'pull-right')
         end
       end
     end

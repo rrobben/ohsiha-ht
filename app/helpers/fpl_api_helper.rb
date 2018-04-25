@@ -106,7 +106,7 @@ module FplApiHelper
         red_cards: 'red_cards',
         saves: 'saves',
         bonus: 'bonus',
-        bps: 'Bonus Points System',
+        bps: 'bps',
         influence: 'influence',
         creativity: 'creativity',
         threat: 'threat',

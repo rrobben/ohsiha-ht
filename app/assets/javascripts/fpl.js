@@ -12,7 +12,7 @@ ActionJS.Fpl = {
                 },
                 rowId: 'id',
                 processing: true,
-                stateSave: true,
+                // stateSave: true,
                 order: [[6, 'desc'], [7, 'desc']],
                 columns: [
                     {
@@ -27,7 +27,7 @@ ActionJS.Fpl = {
                         }
                     },
                     {
-                        data: 'name',
+                        data: 'web_name',
                         searchable: true
                     },
                     { 
@@ -44,10 +44,39 @@ ActionJS.Fpl = {
                         searchable: true
                     },
                     { data: 'cost' },
-                    { data: 'points' },
-                    { data: 'value' },
-                    { data: 'ppg' },
+                    { data: 'total_points' },
+                    { data: 'points_per_game' },
                     { data: 'ppgm' },
+                    { data: 'event_points' },
+                    { data: 'selected_by_percent' },
+                    { data: 'matches' },
+                    { data: 'minutes' },
+                    { data: 'goals_scored' },
+                    { data: 'assists' },
+                    { data: 'clean_sheets' },
+                    { data: 'goals_conceded' },
+                    { data: 'own_goals' },
+                    { data: 'penalties_saved' },
+                    { data: 'penalties_missed' },
+                    { data: 'yellow_cards' },
+                    { data: 'red_cards' },
+                    { data: 'saves' },
+                    { data: 'bonus' },
+                    { data: 'bps' },
+                    { data: 'influence' },
+                    { data: 'creativity' },
+                    { data: 'threat' },
+                    { data: 'ict_index' },
+                    { data: 'form' },
+                    { data: 'dreamteam_count' },
+                    { data: 'value_form' },
+                    { data: 'value_season' },
+                ],
+                columnDefs: [
+                    {
+                        targets: [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+                        visible: false
+                    }
                 ],
                 initComplete: function() {
                     TableHelper.addColumnFilters(this, JSON.parse(jQuery('#filters-json').html()));
@@ -244,18 +273,17 @@ ActionJS.Fpl = {
                 this.resetFilters();
             }.bind(this));
 
+            jQuery(window).on('resize', function() {
+                this.adjustHeight();
+            }.bind(this));
+
             this.setFilters();
         },
 
         showForm: function() {
             if (!jQuery('.filter-dialog-wrapper').hasClass('user-hidden')) {
                 jQuery('#filter-btn').addClass('shown');
-
-                var height = jQuery(window).height() - jQuery('.filter-dialog-wrapper').position().top;
-                jQuery('.filter-dialog-wrapper').height(height);
-
-                height = jQuery('.filter-dialog-wrapper').height() - jQuery('.filter-dialog-wrapper .filter-header').outerHeight() - jQuery('.filter-dialog-wrapper .filter-footer').outerHeight();
-                jQuery('.filter-dialog-wrapper .filter-form').height(height);
+                this.adjustHeight();
 
                 jQuery('#filter-cancel').off().on('click', function (event) {
                     this.resetForm();
@@ -350,6 +378,14 @@ ActionJS.Fpl = {
                 jQuery(this).val('');
                 jQuery(this).trigger('change');
             });
+        },
+
+        adjustHeight: function() {
+            var height = jQuery(window).height() - jQuery('.filter-dialog-wrapper').position().top;
+            jQuery('.filter-dialog-wrapper').height(height);
+
+            height = jQuery('.filter-dialog-wrapper').height() - jQuery('.filter-dialog-wrapper .filter-header').outerHeight() - jQuery('.filter-dialog-wrapper .filter-footer').outerHeight();
+            jQuery('.filter-dialog-wrapper .filter-form').height(height);
         }
     }
 }

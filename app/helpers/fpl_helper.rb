@@ -7,10 +7,36 @@ module FplHelper
         'position',
         'status',
         'cost',
-        'points',
-        'value_season',
+        'points'
+    ]
+
+    PLAYER_TABLE_OPTION_COLUMNS = [
         'ppg',
-        'ppgm'
+        'ppgm',
+        'event_points',
+        'selected_by_percent',
+        'matches',
+        'minutes',
+        'goals_scored',
+        'assists',
+        'clean_sheets',
+        'goals_conceded',
+        'own_goals',
+        'penalties_saved',
+        'penalties_missed',
+        'yellow_cards',
+        'red_cards',
+        'saves',
+        'bonus',
+        'bps',
+        'influence',
+        'creativity',
+        'threat',
+        'ict_index',
+        'form',
+        'dreamteam_count',
+        'value_form',
+        'value_season'
     ]
 
     PLAYER_CHART_AXIS_OPTIONS = {

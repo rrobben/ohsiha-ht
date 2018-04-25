@@ -86,6 +86,9 @@ module FplApiHelper
         web_name: 'web_name',
         first_name: 'first_name',
         second_name: 'second_name',
+        team: 'team',
+        element_type: 'element_type',
+        status: 'status',
         total_points: 'total_points',
         event_points: 'event_points',
         now_cost: 'now_cost',
@@ -103,7 +106,7 @@ module FplApiHelper
         red_cards: 'red_cards',
         saves: 'saves',
         bonus: 'bonus',
-        bps: 'bps Points System',
+        bps: 'Bonus Points System',
         influence: 'influence',
         creativity: 'creativity',
         threat: 'threat',
@@ -113,10 +116,7 @@ module FplApiHelper
         value_form: 'value_form',
         value_season: 'value_season',
         points_per_game: 'points_per_game',
-        status: 'status',
         chance_of_playing_next_round: 'chance_of_playing_next_round',
-        team: 'team',
-        element_type: 'element_type',
         news: 'news'
     }
 

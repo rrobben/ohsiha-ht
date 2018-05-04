@@ -10,6 +10,7 @@ ActionJS.Fpl = {
                     url: Routes.fpl_players_path({watchlist: watchlist}),
                     dataSrc: ''
                 },
+                dom: 'lftip',
                 rowId: 'id',
                 processing: true,
                 // stateSave: true,

@@ -1,6 +1,6 @@
 module FplApiHelper
 
-    FPL_URL = 'https://fantasy.premierleague.com/drf/'
+    FPL_URL = 'https://fantasy.premierleague.com/api/'
     PLAYERS_PATH = 'elements/'
     PLAYER_PATH = 'element-summary/__id__/'
     TEAM_PATH = 'entry/__id__/'
